@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="{{language}}">
+    <head>
+        <script type="text/javascript">
+            var _speedMark = new Date();
+        </script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{{M}}/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{M}}/css/star-rating.css" rel="stylesheet">
+        <link href="{{M}}/css/calibre.css" rel="stylesheet">
+        <!- [if IE]><script src="{{M}}/js/respond.js"></script><![endif]->
+        <title>{% if title %}{{title}} - {%endif%}云书架</title>
+        {% block meta %}{% endblock %}
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logo" href="/">云书架</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li {%if not nav %}class="active"{%endif%} ><a href="/">{{ gettext("Library")}}</a></li>
+                    <li ><a target="_blank" href="/blog">{{ gettext("Blog")}}</a></li>
+                    <li {%if nav == "about" %}class="active"{%endif%} ><a href="/about">{{ gettext("About")}}</a></li>
+                </ul>
+                <form class="hidden-xs navbar-form navbar-left" action="/search" role="search">
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="{{ gettext('书名或关键字') }}">
+                    </div>
+                    <button type="submit" class="btn btn-default">{{ gettext("Search") }}</button>
+                </form>
+                <a class="pull-right btn navbar-btn btn-primary" href="/book/add"><span class="glyphicon glyphicon-cloud-upload"></span> {{ gettext("Upload Book") }}</a>
+                {% if request.user %}
+                <a class="pull-right btn navbar-btn " href="#"><img src="http://img3.douban.com/pics/douban-icons/favicon_16x16.png" /> {{ request.user.username }}</a>
+                {% else %}
+                {% if hostname == "beta.talebook.org" %}
+                <a class="pull-right btn" style="margin-top: 1px" target="_blank" href="http://talebook.org/auth/login/douban-oauth2">
+                    <img src="http://img3.douban.com/pics/douban-icons/login_with_douban_32.png" />
+                </a>
+                {% endif %}
+                {% endif %}
+            </div>
+        </nav>
+
+<div class="hide alert alert-info text-center" role="alert">欢迎访问云书架，最智慧的云存储！账户功能即将上线，敬请期待！</div>
+
+                {% for v in messages %}
+                <div class="alert alert-{{v.status}} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ v.msg }}
+                </div>
+                {% endfor %}
+
+                {% block msgbar %}{% endblock %}
+                <div class="col-md-8">
+                    <div class="visible-xs-block phone-search">
+                        <form class="form-inline" action="/search" role="search">
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" placeholder="{{ gettext('Search book') }}">
+                            </div>
+                            <button type="submit" class="btn btn-default">{{ gettext("Search") }}</button>
+                        </form>
+                    </div>
+                    {% block content %}{% endblock %}
+                </div>
+
+
+
+
+                <!-- sidebar -->
+                <div class="col-md-4">
+                    <div class="row">
+                    {% block sidebar %}{% endblock %}
+                    </div>
+                </div>
+
+                <div class="col-md-12 footer">
+                    <p>
+                    {{ gettext("Power by <a href='http://www.calibre-ebook.com'>Calibre</a>.") }}
+                    {{ gettext("Develop by Kovid Goyal and Rex Liao.<br/>") }}
+                    {{ gettext("Thanks to all contributors.") }}
+                    <br/>粤ICP备14073162号
+                    </p>
+                </div>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+
+        {% block footer %}{% endblock %}
+        <script src="{{M}}/js/jquery-1.11.1.min.js"></script>
+        <script src="{{M}}/js/bootstrap.min.js"></script>
+        <script src="{{M}}/js/spin.min.js"></script>
+        <script src="{{M}}/js/holder.js"></script>
+        <script src="{{M}}/js/star-rating.min.js"></script>
+        <script src="{{M}}/js/jquery.editable.min.js"></script>
+        <script src="{{M}}/js/jquery.cookie-1.4.1.min.js"></script>
+        <script src="{{M}}/js/calibre.js?v=2014-08-16 23:22:14"></script>
+        <script>
+            (function() {
+                if (! window.console ) {
+                    window.console = {};
+                    window.console.log = function() { };
+                }
+                if ( ! Object.keys ) {
+                    Object.keys = function() { return [] };
+                }
+            }())
+            jQuery(".rating").rating({showClear: false, showCaption: false});
+        </script>
+        {% block script %}{% endblock %}
+        <script type="text/javascript" src="http://tajs.qq.com/stats?sId=29043744" charset="UTF-8"></script>
+    </body>
+</html>

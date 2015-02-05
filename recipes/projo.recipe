@@ -1,0 +1,23 @@
+from calibre.web.feeds.news import BasicNewsRecipe
+
+class ProvidenceJournal(BasicNewsRecipe):
+    title          = u'Providence Journal'
+    language       = 'en'
+    __author__     = 'Krittika Goyal'
+    oldest_article = 7  # days
+    max_articles_per_feed = 25
+
+    no_stylesheets = True
+    auto_cleanup = True
+    use_embedded_content = False
+
+    feeds          = [
+('Red Sox',
+ 'http://www.providencejournal.com/sports/red-sox/content/?rss'),
+('Political Scene',
+ 'http://www.providencejournal.com/politics/political-scene/?rss'),
+('Local News',
+ 'http://www.providencejournal.com/breaking-news/?rss'),
+('Music',
+ 'http://www.providencejournal.com/features/entertainment/music/?rss'),
+]
